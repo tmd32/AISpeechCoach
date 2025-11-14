@@ -203,7 +203,7 @@ class Welcome extends StatelessWidget {
                   height: 82,
                   decoration: ShapeDecoration(
                     image: DecorationImage(
-                      image: AssetImage("images/MainLogo.png"),
+                      image: AssetImage("images/MainLogo2.png"),
                       fit: BoxFit.contain,
                       filterQuality: FilterQuality.high,
                     ),
@@ -220,16 +220,17 @@ class Welcome extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 84,
+                left: 0,
+                right: 0,
                 top: 484,
                 child: Text(
-                  'AI와 함께, 당신의 목소리에                   자신감을 더하세요.',
+                  'AI와 함께, 당신의 목소리에\n자신감을 더하세요.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,
                     fontFamily: 'Urbanist',
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
