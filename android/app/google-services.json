@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "973282617552",
+    "project_id": "aispeechcoach-c5b63",
+    "storage_bucket": "aispeechcoach-c5b63.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973282617552:android:ed796d55311aee0c7556d5",
+        "android_client_info": {
+          "package_name": "com.example.aispeechcoach"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTWZgRphrFllhs7fpk5LgO2moLCN1GRJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
