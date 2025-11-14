@@ -1,6 +1,16 @@
+import 'package:aispeechcoach/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'pressable_button.dart';
+import 'login.dart'; // 로그인 화면 파일
+import 'register.dart'; // 회원가입 화면 파일
 
-void main() {
+void main() async {
+  // main 함수를 async로 변경
+  WidgetsFlutterBinding.ensureInitialized(); // Flutter 엔진 초기화 보장
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform, // firebase_options.dart 임포트 후 주석 해제
+  );
   runApp(const FigmaToCodeApp());
 }
 
@@ -11,8 +21,8 @@ class FigmaToCodeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+      theme: ThemeData.light().copyWith( // 테마를 라이트 모드로 변경 (흰색 배경이므로)
+        scaffoldBackgroundColor: Colors.white,
       ),
       home: Scaffold(
         body: ListView(children: [
@@ -96,15 +106,23 @@ class Welcome extends StatelessWidget {
               Positioned(
                 left: 128,
                 top: 783,
-                child: Text(
-                  'Continue as a guest',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: const Color(0xFF42A5F5),
-                    fontSize: 15,
-                    fontFamily: 'Urbanist',
-                    fontWeight: FontWeight.w700,
-                    decoration: TextDecoration.underline,
+                child: GestureDetector( // 클릭 가능하도록 GestureDetector 추가
+                  onTap: () {
+                    debugPrint('Continue as a guest tapped');
+                    // TODO: 게스트로 계속하기 로직 (예: 홈 화면으로 이동)
+                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                  },
+                  child: Text(
+                    'Continue as a guest',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: const Color(0xFF42A5F5),
+                      fontSize: 15,
+                      fontFamily: 'Urbanist',
+                      fontWeight: FontWeight.w700,
+                      decoration: TextDecoration.underline,
+                      decorationColor: const Color(0xFF42A5F5), // 밑줄 색상 추가
+                    ),
                   ),
                 ),
               ),
@@ -119,7 +137,11 @@ class Welcome extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   splashColor: Colors.black12,
                   onTap: () {
-                    debugPrint('Register tapped');
+                    // <<< 수정됨: Register 화면으로 이동
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Register()), // Register()는 register.dart의 위젯
+                    );
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -157,7 +179,11 @@ class Welcome extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   splashColor: Colors.white24,
                   onTap: () {
-                    debugPrint('Login tapped');
+                    // <<< 수정됨: Login 화면으로 이동
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Login()), // Login()은 login.dart의 위젯
+                    );
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -203,7 +229,7 @@ class Welcome extends StatelessWidget {
                   height: 82,
                   decoration: ShapeDecoration(
                     image: DecorationImage(
-                      image: AssetImage("images/MainLogo2.png"),
+                      image: AssetImage("images/MainLogo2.png"), // 경로는 pubspec.yaml 기준입니다.
                       fit: BoxFit.contain,
                       filterQuality: FilterQuality.high,
                     ),
@@ -235,7 +261,8 @@ class Welcome extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 78,
+                left: 0, // 가운데 정렬을 위해 left, right 0으로
+                right: 0,
                 top: 541,
                 child: Text(
                   '언제나 어디서나, 당신만을 위한 스피치 코치',
@@ -252,71 +279,6 @@ class Welcome extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-// PressableButton: 누를 때 scale 애니메이션과 InkWell 잉크 효과 제공
-class PressableButton extends StatefulWidget {
-  final Widget child;
-  final VoidCallback? onTap;
-  final double? width;
-  final double? height;
-  final BorderRadius? borderRadius;
-  final Color? splashColor;
-  final Duration duration;
-
-  const PressableButton({
-    super.key,
-    required this.child,
-    this.onTap,
-    this.width,
-    this.height,
-    this.borderRadius,
-    this.splashColor,
-    this.duration = const Duration(milliseconds: 80),
-  });
-
-  @override
-  State<PressableButton> createState() => _PressableButtonState();
-}
-
-class _PressableButtonState extends State<PressableButton> {
-  bool _pressed = false;
-
-  void _setPressed(bool value) {
-    if (mounted) {
-      setState(() {
-        _pressed = value;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: AnimatedScale(
-        scale: _pressed ? 0.98 : 1.0,
-        duration: widget.duration,
-        curve: Curves.easeOut,
-        child: Ink(
-          width: widget.width,
-          height: widget.height,
-          decoration: BoxDecoration(
-            borderRadius: widget.borderRadius ?? BorderRadius.zero,
-          ),
-          child: InkWell(
-            borderRadius: widget.borderRadius,
-            splashColor: widget.splashColor,
-            onTap: widget.onTap,
-            onTapDown: (_) => _setPressed(true),
-            onTapUp: (_) => _setPressed(false),
-            onTapCancel: () => _setPressed(false),
-            child: widget.child,
-          ),
-        ),
-      ),
     );
   }
 }
