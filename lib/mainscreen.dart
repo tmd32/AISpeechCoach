@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'pressable_button.dart';
 import 'login.dart'; // 로그인 화면 파일
 import 'register.dart'; // 회원가입 화면 파일
+import 'home_screen_1.dart';
 
 void main() async {
   // main 함수를 async로 변경
@@ -110,7 +111,7 @@ class Welcome extends StatelessWidget {
                   onTap: () {
                     debugPrint('Continue as a guest tapped');
                     // TODO: 게스트로 계속하기 로직 (예: 홈 화면으로 이동)
-                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                   },
                   child: Text(
                     'Continue as a guest',
