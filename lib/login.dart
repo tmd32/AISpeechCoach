@@ -1,3 +1,4 @@
+import 'package:aispeechcoach/main_tab_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -66,7 +67,7 @@ class _LoginState extends State<Login> {
         SnackBar(content: Text('Login Successful! Welcome ${user.email}')),
       );
       // TODO: 홈 화면으로 이동
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => MainTabScreen()));
     } else {
       // 로그인 실패
       ScaffoldMessenger.of(context).showSnackBar(
@@ -91,7 +92,7 @@ class _LoginState extends State<Login> {
         SnackBar(content: Text('Google Login Successful! Welcome ${userCredential.user!.displayName}')),
       );
       // TODO: 홈 화면으로 이동
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => MainTabScreen()));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Google Login Failed.')),

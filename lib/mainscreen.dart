@@ -1,4 +1,5 @@
 import 'package:aispeechcoach/firebase_options.dart';
+import 'package:aispeechcoach/main_tab_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'pressable_button.dart';
@@ -111,7 +112,7 @@ class Welcome extends StatelessWidget {
                   onTap: () {
                     debugPrint('Continue as a guest tapped');
                     // TODO: 게스트로 계속하기 로직 (예: 홈 화면으로 이동)
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainTabScreen()));
                   },
                   child: Text(
                     'Continue as a guest',
