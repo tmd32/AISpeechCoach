@@ -1,37 +1,32 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: SpeechAnalysisScreen(),
-  ));
-}
-
-class SpeechAnalysisScreen extends StatelessWidget {
-  const SpeechAnalysisScreen({super.key});
+class SpeechDetailedAnalysisScreen extends StatelessWidget {
+  const SpeechDetailedAnalysisScreen({super.key});
 
   // 색상 상수 정의
-  final Color backgroundColor = const Color(0xFF111111); // 전체 배경
-  final Color cardColor = const Color(0xFF1E1E24); // 카드 배경
-  final Color primaryBlue = const Color(0xFF3F75FF); // 강조 파랑
-  final Color warningYellow = const Color(0xFFD4A018); // 경고 노랑
-  final Color dangerRed = const Color(0xFFE64A4A); // 위험 빨강
-  final Color successGreen = const Color(0xFF4CAF50); // 성공 초록
+  final Color backgroundColor = const Color(0xFF191022);
+  final Color cardColor = const Color(0xFF211C27);
+
+  final Color primaryBlue = const Color(0xFF3F75FF);
+  final Color warningYellow = const Color(0xFFD4A018);
+  final Color dangerRed = const Color(0xFFE64A4A);
+  final Color successGreen = const Color(0xFF4CAF50);
   final Color textWhite = Colors.white;
   final Color textGrey = Colors.grey;
 
   @override
   Widget build(BuildContext context) {
-    // 웹에서 실행 시 배경을 어둡게 채우기 위한 바깥쪽 Container
+    // 1. 화면 밖 배경을 하얀색(Colors.white)으로 설정
     return Container(
-      color: Colors.black, // 웹 브라우저의 나머지 배경색
+      color: Colors.white,
       alignment: Alignment.center, // 중앙 정렬
       child: ConstrainedBox(
-        // 모바일 비율 유지를 위한 최대 너비 제한 (예: 500px)
+        // 2. 앱 화면의 너비를 350px로 제한 (AppBar 포함)
         constraints: const BoxConstraints(
-          maxWidth: 500,
+          maxWidth: 400,
+          maxHeight: 800, // 필요하다면 높이 제한도 가능 (선택 사항)
         ),
-        // 여기서부터 실제 앱 화면 시작
+        // 3. Scaffold가 이 ConstrainedBox 내부에서만 그려짐
         child: Scaffold(
           backgroundColor: backgroundColor,
           appBar: AppBar(
@@ -39,7 +34,9 @@ class SpeechAnalysisScreen extends StatelessWidget {
             elevation: 0,
             leading: IconButton(
               icon: Icon(Icons.arrow_back, color: textWhite),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
             title: Text(
               'Detailed Analysis',
@@ -105,32 +102,35 @@ class SpeechAnalysisScreen extends StatelessWidget {
         Stack(
           alignment: Alignment.center,
           children: [
+            // 배경 원
             SizedBox(
-              width: 120,
-              height: 120,
+              width: 140,
+              height: 140,
               child: CircularProgressIndicator(
                 value: 1.0,
-                strokeWidth: 10,
-                color: const Color(0xFF2C2C35), // 배경 원
+                strokeWidth: 12,
+                color: const Color(0xFF2C2C35),
               ),
             ),
+            // 진행률 원
             SizedBox(
-              width: 120,
-              height: 120,
+              width: 140,
+              height: 140,
               child: CircularProgressIndicator(
                 value: 0.63, // 63%
-                strokeWidth: 10,
+                strokeWidth: 12,
                 color: primaryBlue,
                 strokeCap: StrokeCap.round,
               ),
             ),
+            // 중앙 텍스트
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("63",
                     style: TextStyle(
                         color: textWhite,
-                        fontSize: 32,
+                        fontSize: 40,
                         fontWeight: FontWeight.bold)),
                 Text("/ 100", style: TextStyle(color: textGrey, fontSize: 12)),
               ],
@@ -140,7 +140,7 @@ class SpeechAnalysisScreen extends StatelessWidget {
         const SizedBox(height: 20),
         Text("좀 더 노력이 필요합니다!",
             style: TextStyle(
-                color: textWhite, fontSize: 16, fontWeight: FontWeight.w600)),
+                color: textWhite, fontSize: 16, fontWeight: FontWeight.bold)),
       ],
     );
   }
@@ -158,35 +158,36 @@ class SpeechAnalysisScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: cardColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white10),
+        border: Border.all(color: Colors.white.withOpacity(0.05)),
       ),
       child: Row(
         children: [
           _buildIconBox(icon, badgeColor),
           const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title,
-                  style: TextStyle(
-                      color: textWhite,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold)),
-              const SizedBox(height: 4),
-              Text(value, style: TextStyle(color: textGrey, fontSize: 12)),
-            ],
+          Expanded( // 텍스트 오버플로우 방지
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title,
+                    style: TextStyle(
+                        color: textWhite,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold)),
+                const SizedBox(height: 4),
+                Text(value, style: TextStyle(color: textGrey, fontSize: 12)),
+              ],
+            ),
           ),
-          const Spacer(),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
-              color: badgeColor.withOpacity(0.2),
+              color: badgeColor, // 뱃지 배경색 진하게
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(badgeText,
-                style: TextStyle(
-                    color: badgeColor,
-                    fontSize: 12,
+                style: const TextStyle( // 뱃지 텍스트는 검정색 등으로 가독성 확보
+                    color: Colors.black87,
+                    fontSize: 11,
                     fontWeight: FontWeight.bold)),
           ),
           const SizedBox(width: 10),
@@ -203,7 +204,7 @@ class SpeechAnalysisScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: cardColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white10),
+        border: Border.all(color: Colors.white.withOpacity(0.05)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,31 +213,32 @@ class SpeechAnalysisScreen extends StatelessWidget {
             children: [
               _buildIconBox(Icons.hearing, dangerRed),
               const SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("명확성",
-                      style: TextStyle(
-                          color: textWhite,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 4),
-                  Text("78% Score",
-                      style: TextStyle(color: textGrey, fontSize: 12)),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("명확성",
+                        style: TextStyle(
+                            color: textWhite,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 4),
+                    Text("78% Score",
+                        style: TextStyle(color: textGrey, fontSize: 12)),
+                  ],
+                ),
               ),
-              const Spacer(),
               Container(
                 padding:
                 const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
-                  color: dangerRed.withOpacity(0.2),
+                  color: dangerRed, // 뱃지 진하게
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Text("개선 필요",
+                child: const Text("개선 필요",
                     style: TextStyle(
-                        color: dangerRed,
-                        fontSize: 12,
+                        color: Colors.black87,
+                        fontSize: 11,
                         fontWeight: FontWeight.bold)),
               ),
               const SizedBox(width: 10),
@@ -244,7 +246,7 @@ class SpeechAnalysisScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          Divider(color: Colors.white10),
+          Divider(color: Colors.white.withOpacity(0.1)),
           const SizedBox(height: 16),
           Text(
             "웅얼거리거나 불명확하게 들리는 단어들이 몇 개 감지되었습니다. 각 음절을 또박또박 발음하는 데 집중해 보세요",
@@ -264,7 +266,7 @@ class SpeechAnalysisScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFF151518),
+        color: const Color(0xFF2C2C35), // 오디오 클립 배경색 약간 밝게
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -275,15 +277,19 @@ class SpeechAnalysisScreen extends StatelessWidget {
             children: [
               Text('"$title"',
                   style: TextStyle(
-                      color: Colors.grey[300], fontWeight: FontWeight.bold)),
+                      color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13)),
               Text(timestamp,
-                  style: TextStyle(color: Colors.grey[600], fontSize: 11)),
+                  style: TextStyle(color: Colors.grey[500], fontSize: 11)),
             ],
           ),
-          CircleAvatar(
-            radius: 14,
-            backgroundColor: primaryBlue,
-            child: const Icon(Icons.play_arrow, size: 16, color: Colors.white),
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              color: primaryBlue,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.play_arrow, size: 20, color: Colors.white),
           )
         ],
       ),
@@ -308,7 +314,7 @@ class SpeechAnalysisScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: backgroundColor,
-        border: Border(top: BorderSide(color: Colors.white10)),
+        // 상단 경계선 제거하여 더 깔끔하게
       ),
       child: SizedBox(
         width: double.infinity,

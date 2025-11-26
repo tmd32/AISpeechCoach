@@ -1,3 +1,4 @@
+import 'package:aispeechcoach/speech_analysis.dart';
 import 'package:flutter/material.dart';
 
 class PracticeSummaryScreen extends StatelessWidget {
@@ -15,7 +16,7 @@ class PracticeSummaryScreen extends StatelessWidget {
       alignment: Alignment.center,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
-          maxWidth: 500, // 최대 너비 제한
+          maxWidth: 400, // 최대 너비 제한
         ),
         // 실제 앱 화면 Scaffold 시작
         child: Scaffold(
@@ -87,6 +88,10 @@ class PracticeSummaryScreen extends StatelessWidget {
                   onPressed: () {
                     // 'Speech Analysis' 버튼 액션
                     // 필요 시 여기에 Navigator.push 등을 추가하세요.
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SpeechAnalysisScreen()), // Login()은 login.dart의 위젯
+                    );
                   },
                 ),
                 const SizedBox(height: 10),

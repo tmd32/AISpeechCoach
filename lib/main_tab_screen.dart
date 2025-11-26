@@ -49,7 +49,7 @@ class _MainTabScreenState extends State<MainTabScreen> {
       color: Colors.grey[200], // 웹 배경색
       alignment: Alignment.center,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 500),
+        constraints: const BoxConstraints(maxWidth: 400),
         child: Scaffold(
           // IndexedStack: 탭 전환 시 화면 상태(스크롤 위치 등)를 유지해줌
           body: IndexedStack(
